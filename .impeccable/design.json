@@ -1,0 +1,31 @@
+{
+  "version": 1,
+  "mode": "persuade",
+  "world": "Capital allocation ledger",
+  "artifact": "capitalledger",
+  "tokens": {
+    "color": {
+      "bg": "#f0ecd7",
+      "ink": "#17362d",
+      "muted": "#5d6e60",
+      "line": "#b1b59b",
+      "panel": "#dfe2c8",
+      "accent": "#b38326",
+      "inverse": "#14342a",
+      "inverseInk": "#f3f1df"
+    },
+    "typography": {
+      "display": "Noto Serif Thai",
+      "body": "Noto Sans Thai",
+      "utility": "system monospace"
+    },
+    "spacing": {
+      "page": "clamp(18px, 5vw, 76px)",
+      "section": "clamp(67px, 10vw, 144px)"
+    },
+    "shape": {
+      "radius": "world-specific",
+      "elevation": "one deliberate surface system"
+    }
+  }
+}
