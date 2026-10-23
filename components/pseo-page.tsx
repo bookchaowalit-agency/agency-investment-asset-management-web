@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { site } from '@/lib/site';
 import { pseoService, type PseoService } from '@/lib/pseo';
-import { absoluteUrl, siteConfig } from '@/lib/site-config';
+import { canonicalUrl } from '@/lib/site-config';
 
 const statusCopy = {
   incubating: { label: 'กำลังเปิดรอบ validation', note: 'กำลังทดสอบ buyer, offer และ delivery economics ก่อนเปิดรับงานในขอบเขตที่ชัดเจน' },
@@ -10,7 +10,8 @@ const statusCopy = {
 } as const;
 
 function structuredData(service: PseoService) {
-  const canonical = siteConfig.publicUrl ? absoluteUrl('/services/' + service.slug) : undefined;
+  const canonical = canonicalUrl('/services/' + service.slug);
+  const servicesUrl = canonicalUrl('/services');
   return JSON.stringify([
     {
       '@context': 'https://schema.org',
@@ -26,7 +27,7 @@ function structuredData(service: PseoService) {
       '@context': 'https://schema.org',
       '@type': 'BreadcrumbList',
       itemListElement: [
-        { '@type': 'ListItem', position: 1, name: 'Services', ...(siteConfig.publicUrl ? { item: absoluteUrl('/services') } : {}) },
+        { '@type': 'ListItem', position: 1, name: 'Services', ...(servicesUrl ? { item: servicesUrl } : {}) },
         { '@type': 'ListItem', position: 2, name: service.title, ...(canonical ? { item: canonical } : {}) },
       ],
     },

@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import localFont from 'next/font/local';
 import type { ReactNode } from 'react';
 import { site } from '@/lib/site';
-import { siteConfig } from '@/lib/site-config';
+import { canonicalUrl, siteConfig } from '@/lib/site-config';
 import './globals.css';
 
 const notoSansThai = localFont({
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
   description: site.promise,
   openGraph: { type: 'website', locale: 'th_TH', siteName: site.name, title: site.name + ' — ' + site.thaiName, description: site.promise },
   twitter: { card: 'summary', title: site.name + ' — ' + site.thaiName, description: site.promise },
-  ...(siteConfig.publicUrl ? { alternates: { canonical: siteConfig.publicUrl } } : {}),
+  ...(siteConfig.publicUrl ? { alternates: { canonical: canonicalUrl('/') } } : {}),
   robots: siteConfig.isIndexable ? { index: true, follow: true } : { index: false, follow: false },
 };
 
