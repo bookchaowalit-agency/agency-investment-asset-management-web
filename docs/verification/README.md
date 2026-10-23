@@ -12,6 +12,10 @@
 ## Local checks
 
 ```bash
-npm run typecheck
-npm run build
+npm run lint
+npm test        # site config, robots/sitemap (noindex default), pSEO route, page renders, Sentry scrubbing
+npm run check   # typecheck + static export
 ```
+
+`tests/seo-routes.test.ts` and `tests/site-config.test.ts` pin the noindex / `Disallow: /` default and the
+trailing-slash canonical and sitemap URLs.
