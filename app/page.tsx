@@ -1,3 +1,5 @@
+import Link from 'next/link';
+import { pseoService } from '@/lib/pseo';
 import { site } from '@/lib/site';
 
 const statusCopy = {
@@ -52,6 +54,8 @@ function Artifact() {
   }
 }
 
+const servicePath = `/services/${pseoService.slug}/`;
+
 export default function HomePage() {
   const readiness = statusCopy[site.status];
 
@@ -62,7 +66,7 @@ export default function HomePage() {
           <span className="brand-mark" aria-hidden="true">{String(site.number).padStart(2, '0')}</span>
           <span><strong>{site.name}</strong><small>{site.thaiName}</small></span>
         </a>
-        <nav aria-label="เมนูหลัก"><a href="#offer">Scope</a><a href="#readiness">Readiness</a><a href="/services/investment-operating-model">Service</a></nav>
+        <nav aria-label="เมนูหลัก"><a href="#offer">Scope</a><a href="#readiness">Readiness</a><Link href={servicePath}>Service</Link></nav>
       </header>
 
       <main id="main-content" className="site-main">
@@ -72,7 +76,7 @@ export default function HomePage() {
             <p className="hero-thesis">{site.design.thesis}</p>
             <div className="hero-meta"><span>{site.design.material}</span><span>showcase / {site.stage}</span></div>
             <a className="primary-link" href="#offer">{site.cta}<span className="link-mark" aria-hidden="true" /></a>
-            <a className="pseo-home-link" href="/services/investment-operating-model">ดู service page <span aria-hidden="true">↗</span></a>
+            <Link className="pseo-home-link" href={servicePath}>ดู service page <span aria-hidden="true">↗</span></Link>
           </div>
           <div className="hero-art">
             <Artifact />
