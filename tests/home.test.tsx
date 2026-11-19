@@ -16,9 +16,9 @@ const esc = (text: string) => text.replace(/&/g, "&amp;");
 describe("home page", () => {
   it("renders the agency promise, offer, scope and the no-lead-form notice", () => {
     const html = renderToString(<Home />);
-    expect(html).toContain(esc(site.promise));
+    expect(html.replace(/<[^>]*>/g, "")).toContain(esc(site.promise));
     expect(html).toContain(esc(site.offer));
-    for (const item of site.scope) expect(html).toContain(esc(item));
+    for (const item of site.scope) expect(html.replace(/<[^>]*>/g, "")).toContain(esc(item));
     expect(html).toContain("ยังไม่มี lead form หรือการรับข้อมูลลูกค้า");
     expect(html).toContain("no client claims");
   });
