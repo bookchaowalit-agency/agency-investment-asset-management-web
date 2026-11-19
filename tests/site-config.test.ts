@@ -16,7 +16,9 @@ describe("site config", () => {
     const { siteConfig, canonicalUrl, pageMetadata } = await loadConfig({ NEXT_PUBLIC_SITE_URL: "", NEXT_PUBLIC_SITE_INDEXABLE: "true" });
     expect(siteConfig.publicUrl).toBeUndefined();
     expect(siteConfig.isIndexable).toBe(false);
-    expect(siteConfig.metadataUrl).toBe("http://localhost:3010");
+    // Metadata URLs (og:image) fall back to the production domain from lib/site.ts, never localhost.
+    expect(siteConfig.metadataUrl).toMatch(/^https:\/\/[^/]+$/);
+    expect(siteConfig.metadataUrl).toBe(siteConfig.productionUrl);
     expect(canonicalUrl("/services")).toBeUndefined();
     const meta = pageMetadata("T", "D", "/services");
     expect(meta.robots).toEqual({ index: false, follow: false });

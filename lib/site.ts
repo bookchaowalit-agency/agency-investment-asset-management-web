@@ -21,6 +21,7 @@ export const site = {
   "status": "locked",
   "design": {
     "projectName": "solo-agency-investment-asset-management",
+    "productionUrl": "https://solo-agency-investment-asset-manage.vercel.app",
     "archetype": "capitalledger",
     "motif": "capitalledger",
     "world": "Capital allocation ledger",
