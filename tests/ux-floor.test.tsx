@@ -10,28 +10,27 @@ import type { AgencyStatus } from '@/lib/readiness';
 import { site } from '@/lib/site';
 import { socialImage } from '@/lib/site-config';
 
-// 2026-11-18 review: Thai nav, honest next step for each readiness state; 2026-11-19: no sitewide cross-site footer links.
+// 2026-11-18 review: Thai nav and honest next steps; BOO-453 adds the portfolio hub to shared navigation and footers.
 describe('UX floor', () => {
-  it('keeps cross-site links out of the shared footer: one in-content portfolio link on the home page only', async () => {
+  it('links back to the portfolio hub from shared navigation and footers', async () => {
     const home = renderToString(<Home />);
     const service = renderToString(await ServicePage({ params: Promise.resolve({ slug: pseoService.slug }) }));
-    // pSEO plan: no sitewide footer links across the 14 sites (they would read as a link network).
+    // Every page keeps the portfolio hub reachable while preserving the existing privacy and feedback links.
     for (const html of [home, service]) {
       const footer = html.slice(html.lastIndexOf('<footer'));
-      expect(footer).not.toMatch(/href="https:\/\/(bookchaowalit\.com|agency\.bookchaowalit\.com)\/?(agencies)?"/);
+      expect(footer).toContain('href="https://bookchaowalit.com">bookchaowalit.com</a>');
       expect(footer).toContain('href="https://bookchaowalit.com/privacy"');
       expect(footer).toContain('href="https://monitor.bookchaowalit.com/"');
       expect(footer).toContain('href="mailto:bookchaowalit.work@gmail.com"');
     }
-    expect(home.match(/href="https:\/\/agency\.bookchaowalit\.com[^"]*"/g)).toHaveLength(1);
-    expect(home).not.toContain('href="https://bookchaowalit.com"');
-    expect(service).not.toMatch(/href="https:\/\/agency\.bookchaowalit\.com/);
-    expect(service).not.toContain('href="https://bookchaowalit.com"');
+    expect(home.match(/href="https:\/\/agency\.bookchaowalit\.com[^"]*"/g)).toHaveLength(2);
+    expect(home).toContain('href="https://bookchaowalit.com">bookchaowalit.com</a>');
+    expect(service).toContain('href="https://bookchaowalit.com">bookchaowalit.com</a>');
   });
 
   it('uses Thai nav labels that match the section headings', () => {
     const html = renderToString(<Home />);
-    for (const label of ['ขอบเขต', 'ความพร้อม', 'บริการ']) expect(html).toContain(`>${label}</`);
+    for (const label of ['ขอบเขต', 'สถานะ', 'บริการ']) expect(html).toContain(`>${label}</`);
     expect(html).not.toMatch(/>Scope</);
   });
 
@@ -41,6 +40,7 @@ describe('UX floor', () => {
     // The readiness note must not invite an email inquiry; the only mailto is the footer feedback link, labelled as such.
     expect(html.match(/href="mailto:/g)).toHaveLength(1);
     expect(html).toContain('href="mailto:bookchaowalit.work@gmail.com">Site feedback</a>');
+    expect(html).toContain('href="https://agency.bookchaowalit.com/agencies">ดู vertical ที่เปิดรับงาน');
     expect(html).not.toContain('>Contact</a>');
     if ((site.status as AgencyStatus) === 'locked') expect(html).toContain('ยังไม่เปิดรับงาน');
     else expect(html).not.toContain('ยังไม่เปิดรับงาน');
