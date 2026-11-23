@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { pseoService } from '@/lib/pseo';
 import { LangText } from '@/components/lang-text';
-import SiteLinks, { portfolioHref } from '@/components/site-links';
+import SiteLinks, { hubHref, portfolioHref } from '@/components/site-links';
 import { type AgencyStatus, readinessCopy } from '@/lib/readiness';
 import { site } from '@/lib/site';
 
@@ -55,19 +55,19 @@ export default function HomePage() {
           <span className="brand-mark" aria-hidden="true">{String(site.number).padStart(2, '0')}</span>
           <span><strong>{site.name}</strong><small>{site.thaiName}</small></span>
         </a>
-        <nav aria-label="เมนูหลัก"><a href="#offer">ขอบเขต</a><a href="#readiness">ความพร้อม</a><Link href={servicePath}>บริการ</Link></nav>
+        <nav aria-label="เมนูหลัก"><a href="#offer">ขอบเขต</a><a href="#readiness">สถานะ</a><Link href={servicePath}>บริการ</Link><a href={hubHref}>bookchaowalit.com</a></nav>
       </header>
 
       <main id="main-content" className="site-main">
         <section id="top" className="hero">
           <div className="hero-copy">
-            <h1><LangText text={site.promise} /></h1>
-            <p className="hero-thesis"><LangText text={site.design.thesis} /></p>
+            <h1><LangText text={site.name} /></h1>
+            <p className="hero-thesis"><LangText text={site.promise} /></p>
             <div className="hero-actions">
-              <a className="primary-link" href="#offer">{site.cta}<span className="link-mark" aria-hidden="true" /></a>
+              <a className="primary-link" href={locked ? portfolioHref : '#offer'}>{locked ? 'ดู vertical ที่เปิดรับงาน' : site.cta}<span className="link-mark" aria-hidden="true" /></a>
               {locked ? <span className="status-badge">ยังไม่เปิดรับงาน</span> : null}
             </div>
-            {/* No portfolio link here: the readiness note below holds the page's one link to it (pSEO plan). */}
+            {/* Keep the closed-intake boundary visible beside the next step for this locked vertical. */}
             {locked ? <p className="locked-note">{site.fit}</p> : null}
             <Link className="pseo-home-link" href={servicePath}>ดู service page <span aria-hidden="true">↗</span></Link>
             <div className="hero-meta"><span lang="en">{site.design.material}</span><span>showcase / {site.stage}</span></div>
